@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/wangkevin/Workspace/src/opensource/kevin/wkevin.github.io-write/source'
-let g:netrw_dirhist_2='/Users/wangkevin/Workspace/src/opensource/iOS/iOS.faculty/ui'
-let g:netrw_dirhist_3='/Users/wangkevin/Workspace/src/kevin/iOS/HelloWorld/HelloWorld.xcworkspace/xcuserdata/wangkevin.xcuserdatad'
-let g:netrw_dirhist_4='/Users/wangkevin/Workspace/src/opensource/iOS/grocery/.git/modules'
-let g:netrw_dirhist_5='/Users/wangkevin/.ssh'
-let g:netrw_dirhist_6='/Users/wangkevin/Kevin/wkevin.github.io-write/themes/iOS7/layout/_partial/post'

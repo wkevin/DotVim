@@ -580,7 +580,7 @@ function! <SID>SrcExpl_WinNew(wincmd)
         return 0
     endif
 
-    exe 'silent! botright ' . string(g:SrcExpl_winHeight) . 'split ' . a:wincmd
+    exe 'silent! botright ' . string(g:SrcExpl_winHeight) . 'vsplit ' . a:wincmd
     let srcexpl_win = winnr("$")
     call setwinvar(srcexpl_win, s:SrcExpl_winName, 1)
     let s:SrcExpl_Window = srcexpl_win
@@ -1444,7 +1444,7 @@ function! <SID>SrcExpl_Init()
     let s:SrcExpl_lastSymbol = ''
 
     " Auto change current work directory
-    exe "set autochdir"
+    "exe "set autochdir"
     " Let Vim find the possible tags file
     exe "set tags=tags;"
     " Set the actual update time according to user's requirement

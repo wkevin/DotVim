@@ -1014,6 +1014,7 @@ let s:DATA_FILE_VERSION = 400
 
 "
 function s:checkDataFileCompatibility()
+  let s:dataFileAvailable = 0
   if empty(g:fuf_dataDir)
     let s:dataFileAvailable = 0
     return

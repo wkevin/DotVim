@@ -617,7 +617,7 @@ let g:SrcExpl_updateTagsCmd = "ctags --exclude='.repo' --exclude='.git' --sort=f
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
-let g:ctrlp_regexp = 1
+let g:ctrlp_regexp = 0
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_lazy_update = 1
