@@ -20,5 +20,6 @@ $cp .vim/.vimrc ./
 2. find or modify your $HOME 
 3. cd $HOME
 4. git clone https://github.com/wkevin/DotVim.git vimfiles
-5. cp vimfiles/_vimrc "C:\Program Files\Vim"
 ```
+other info:
+* `:version` check the path to looking for vimrc file 
