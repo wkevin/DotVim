@@ -559,6 +559,10 @@ set termencoding= "默认空值，输出到终端不进行编码转换。
 set guifont=Bitstream_Vera_Sans_Mono:h9:cANSI "记住空格用下划线代替哦
 set gfw=幼圆:h10:cGB2312 
 
+"====== var for grep.vim =====
+let Grep_Skip_Files = 'tags'
+"let Grep_Default_Filelist = '^tags'
+
 "====== var for TagList =====
 let Tlist_Show_One_File=1
 let Tlist_UseRight_Window=1
@@ -581,10 +585,10 @@ let g:SrcExpl_winHeight = 60
 let g:SrcExpl_refreshTime = 100 
 
 " // Set "Enter" key to jump into the exact definition context 
-let g:SrcExpl_jumpKey = "<ENTER><ENTER>" 
+"let g:SrcExpl_jumpKey = "<Enter>" 
 
 " // Set "Space" key for back from the definition context 
-let g:SrcExpl_gobackKey = "<SPACE><SPACE>" 
+"let g:SrcExpl_gobackKey = "<SPACE>" 
 
 " // In order to avoid conflicts, the Source Explorer should know what plugins
 " // except itself are using buffers. And you need add their buffer names into
@@ -617,10 +621,11 @@ let g:SrcExpl_updateTagsCmd = "ctags --exclude='.repo' --exclude='.git' --sort=f
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
-let g:ctrlp_regexp = 0
+let g:ctrlp_regexp = 1
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_lazy_update = 1
+
 
 "===== save & close file =====
 nmap <F2> :update<cr>
@@ -646,10 +651,11 @@ map <leader><F3> :Rgrep<cr>
 
 "===== Find tag =====
 map <F5> :Tlist<cr>
+let g:script_runner_key = '<F5><F5>'
 
 map <F6> :tj  
-"map <F7> :tp<cr>
-"map <F8> :tn<cr>
+map <F7> :tp<cr>
+map <F8> :tn<cr>
 
 nmap <F6><F6> :SrcExplToggle<cr>
 let g:SrcExpl_updateTagsKey = "<leader><F6>" 

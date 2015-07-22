@@ -832,7 +832,9 @@ function! s:RunGrep(cmd_name, grep_cmd, action, ...)
     let cmd = cmd . grep_expr_option . " " . pattern
     let cmd = cmd . " " . filenames
 
+    cd %:p:h
     call s:RunGrepCmd(cmd, pattern, a:action)
+    cd -
 endfunction
 
 " Define the set of grep commands
