@@ -647,6 +647,11 @@ map <leader><leader> :BufExplorerHorizontalSplit<CR>
 map <F3> :Bgrep<cr>
 map <F3><F3> :Grep<cr>
 map <leader><F3> :Rgrep<cr>
+map 2  :copen<cr>
+map cp :cprev<cr>
+map 3  :cprev<cr>
+map cn :cnext<cr>
+map 4  :cnext<cr>
 "map <F3><F3> :grep -wR --include=*.h --include=*.c  --include=*mak* --include=*.java --exclude-dir=.git --exclude=.svn 
 
 "===== Find tag =====
@@ -676,3 +681,8 @@ if filereadable("vimrc")
     "echo "find vimrc"
     source vimrc
 endif
+
+aug QFClose
+  au!
+  au WinLeave * :if getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+aug END
