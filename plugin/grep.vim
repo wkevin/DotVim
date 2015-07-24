@@ -476,7 +476,7 @@ function! s:RunGrepCmd(cmd, pattern, action)
     " Open the grep output window
     if g:Grep_OpenQuickfixWindow == 1
         " Open the quickfix window below the current window
-        botright copen
+        botright copen 20
     endif
 
     call delete(tmpfile)

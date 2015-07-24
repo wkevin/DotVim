@@ -647,7 +647,7 @@ map <leader><leader> :BufExplorerHorizontalSplit<CR>
 map <F3> :Bgrep<cr>
 map <F3><F3> :Grep<cr>
 map <leader><F3> :Rgrep<cr>
-map 2  :copen<cr>
+map 2  :botright copen 20<cr>
 map cp :cprev<cr>
 map 3  :cprev<cr>
 map cn :cnext<cr>
@@ -655,7 +655,10 @@ map 4  :cnext<cr>
 "map <F3><F3> :grep -wR --include=*.h --include=*.c  --include=*mak* --include=*.java --exclude-dir=.git --exclude=.svn 
 
 "===== Find tag =====
-map <F5> :Tlist<cr>
+map <F5> :TagbarToggle<cr>
+let g:tagbar_left = 1
+"let g:tagbar_autopreview = 1
+let g:tagbar_sort = 0
 let g:script_runner_key = '<F5><F5>'
 
 map <F6> :tj  
