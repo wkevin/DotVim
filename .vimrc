@@ -644,20 +644,26 @@ map <leader>j :FufJumpList<CR>
 map <leader><leader> :BufExplorerHorizontalSplit<CR>
 
 "===== Find string =====
-map <F3> :Grep<cr> " search in current file's folder
-map <F3><F3> :Rgrep<cr>
-map 2  :botright copen 20<cr>
+"search in current buffers
+"map <F3> :Bgrep<cr> 
+"search in current buffer not all buffers
+map <F3> :grep <cword> %:p <cr> :copen 20<cr>
+"search in current file's folder
+map <F3><F3> :Grep<cr> 
+"search in one folder withless current file
+map <leader><F3> :Rgrep<cr>
+map 1  :botright copen 20<cr>
 map cp :cprev<cr>
-map 3  :cprev<cr>
+map 2  :cprev<cr>
 map cn :cnext<cr>
-map 4  :cnext<cr>
+map 3  :cnext<cr>
 "map <F3><F3> :grep -wR --include=*.h --include=*.c  --include=*mak* --include=*.java --exclude-dir=.git --exclude=.svn 
 
 "===== Find tag =====
 map <F5> :TagbarToggle<cr>
 let g:tagbar_left = 1
 "let g:tagbar_autopreview = 1
-autocmd VimEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
+autocmd BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
 let g:tagbar_sort = 0
 let g:script_runner_key = '<F5><F5>'
 
@@ -685,6 +691,7 @@ if filereadable("vimrc")
     source vimrc
 endif
 
+"close the quickfix window when leave it
 aug QFClose
   au!
   au WinLeave * :if getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
