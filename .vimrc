@@ -644,9 +644,8 @@ map <leader>j :FufJumpList<CR>
 map <leader><leader> :BufExplorerHorizontalSplit<CR>
 
 "===== Find string =====
-map <F3> :Bgrep<cr>
-map <F3><F3> :Grep<cr>
-map <leader><F3> :Rgrep<cr>
+map <F3> :Grep<cr> " search in current file's folder
+map <F3><F3> :Rgrep<cr>
 map 2  :botright copen 20<cr>
 map cp :cprev<cr>
 map 3  :cprev<cr>
@@ -658,6 +657,7 @@ map 4  :cnext<cr>
 map <F5> :TagbarToggle<cr>
 let g:tagbar_left = 1
 "let g:tagbar_autopreview = 1
+autocmd VimEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
 let g:tagbar_sort = 0
 let g:script_runner_key = '<F5><F5>'
 
