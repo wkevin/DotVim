@@ -546,7 +546,7 @@ map <leader>q :e ~/buffer<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Kevin Modify 
+" Kevin Modify
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "====== var for vi/vim =====
@@ -557,7 +557,7 @@ set fileencodings=utf8,gbk "打开、编辑、保存“已有文件”时的可�
 set termencoding= "默认空值，输出到终端不进行编码转换。
 " 字体
 set guifont=Bitstream_Vera_Sans_Mono:h9:cANSI "记住空格用下划线代替哦
-set gfw=幼圆:h10:cGB2312 
+set gfw=幼圆:h10:cGB2312
 
 "====== var for grep.vim =====
 let Grep_Skip_Files = 'tags'
@@ -573,7 +573,7 @@ let g:vim_markdown_folding_disabled=1
 
 "====== var for NERDTree =====
 let NERDTreeWinPos='right'
-let NERDTreeWinSize='25'
+let NERDTreeWinSize='35'
 let NERDTreeQuitOnOpen='1'
 
 "====== var for SrcExpl =====
@@ -608,7 +608,7 @@ let g:SrcExpl_isUpdateTags = 0
 
 " // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to 
 " // create/update the tags file 
-let g:SrcExpl_updateTagsCmd = "ctags --exclude='.repo' --exclude='.git' --sort=foldcase -R ." 
+let g:SrcExpl_updateTagsCmd = "ctags --langmap=java:+.aidl --exclude='.repo' --exclude='.git' --exclude='*.html' --sort=foldcase -R ." 
 
 " // Set "<F12>" key for updating the tags file artificially 
 "let g:SrcExpl_updateTagsKey = "<leader><F10>" 
@@ -627,6 +627,16 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_lazy_update = 1
 
 
+"====== var for Tagbar =====
+let g:tagbar_left = 1
+let g:tagbar_sort = 0
+"let g:tagbar_autopreview = 1
+
+
+"==========================================
+" Hot key configurationi
+"==========================================
+
 "===== save & close file =====
 nmap <F2> :update<cr>
 imap <F2> <Esc><Esc>:update<cr>
@@ -635,7 +645,7 @@ map <F4> :Bclose<cr>
 
 "===== Find file =====
 map f :CtrlP<CR>
-map F :CtrlP 
+map F :CtrlP
 map <leader>f :FufFile<CR>
 map <leader>b :FufBuffer<CR>
 map <leader>d :FufDir<CR>
@@ -644,37 +654,37 @@ map <leader>j :FufJumpList<CR>
 map <leader><leader> :BufExplorerHorizontalSplit<CR>
 
 "===== Find string =====
-"search in current buffers
-"map <F3> :Bgrep<cr> 
-"search in current buffer not all buffers
-map <F3> :grep <cword> %:p <cr> :copen 20<cr>
-"search in current file's folder
-map <F3><F3> :Grep<cr> 
-"search in one folder withless current file
-map <leader><F3> :Rgrep<cr>
-map 1  :botright copen 20<cr>
-map cp :cprev<cr>
-map 2  :cprev<cr>
-map cn :cnext<cr>
-map 3  :cnext<cr>
-"map <F3><F3> :grep -wR --include=*.h --include=*.c  --include=*mak* --include=*.java --exclude-dir=.git --exclude=.svn 
+"== Use vimgrep == can not dont ignore case
+noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 20<cr>
 
-"===== Find tag =====
+"== Use /bin/grep == faster, but always jump to the first result
+"map <F3> :grep <cword> %:p <cr> :copen 20<cr>
+"map <F3><F3> :grep -wR --include=*.h --include=*.c  --include=*mak* --include=*.java --exclude-dir=.git --exclude=.svn
+
+"== Use Grep vim plugin ==
+"map <F3> :Bgrep<cr>
+map <F3><F3> :Grep<cr><cr><cr>
+map <F3><F3><F3> :Rgrep<cr>
+
+"== quickfix shortcuts ==
+map <leader>1  :botright copen 20<cr>
+map <leader>2  :cprev<cr>
+map <leader>3  :cnext<cr>
+map <leader>4  :cclose<cr>
+
+"===== Find symbal =====
 map <F5> :TagbarToggle<cr>
-let g:tagbar_left = 1
-"let g:tagbar_autopreview = 1
-autocmd BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
-let g:tagbar_sort = 0
-let g:script_runner_key = '<F5><F5>'
+map <F5><F5> :Tlist<cr>
+let g:script_runner_key = '<leader><F5>'
 
-map <F6> :tj  
+map <F6> :tj
 map <F7> :tp<cr>
 map <F8> :tn<cr>
 
 nmap <F6><F6> :SrcExplToggle<cr>
-let g:SrcExpl_updateTagsKey = "<leader><F6>" 
-let g:SrcExpl_prevDefKey = "<F7>" 
-let g:SrcExpl_nextDefKey = "<F8>" 
+let g:SrcExpl_updateTagsKey = "<leader><F6>"
+let g:SrcExpl_prevDefKey = "<F7>"
+let g:SrcExpl_nextDefKey = "<F8>"
 
 
 "===== Other =====
@@ -692,7 +702,17 @@ if filereadable("vimrc")
 endif
 
 "close the quickfix window when leave it
-aug QFClose
+aug QickfixAutoClose
   au!
-  au WinLeave * :if getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+  "au WinLeave * :if getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+  au WinLeave * :if getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"
+  au WinLeave * :q
+  au WinLeave * :if bufname("%") == "__Tagbar__"
+  au WinLeave * :wincmd w
+  au WinLeave * :endif
+  au WinLeave * :endif
 aug END
+
+
+"au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |NERDTreeFind|endif
+au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
