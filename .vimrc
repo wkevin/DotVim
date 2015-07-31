@@ -299,8 +299,7 @@ endfunc
 " => Moving around, tabs and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
-map <space> /
-map <c-space> ?
+map <space> <C-d>
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move btw. windows
@@ -677,7 +676,7 @@ map <F5> :TagbarToggle<cr>
 map <F5><F5> :Tlist<cr>
 let g:script_runner_key = '<leader><F5>'
 
-map <F6> :tj
+map <F6> :tj 
 map <F7> :tp<cr>
 map <F8> :tn<cr>
 
@@ -715,4 +714,13 @@ aug END
 
 
 "au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |NERDTreeFind|endif
-au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
+"au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
+aug toggleTagbar
+  au BufEnter * :if getftype(bufname("%")) == "file"
+  au BufEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' 
+  au BufEnter * :TagbarOpen
+  au BufEnter * :else
+  au BufEnter * :TagbarClose
+  au BufEnter * :endif
+  au BufEnter * :endif
+aug END 
