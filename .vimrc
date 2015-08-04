@@ -670,6 +670,7 @@ noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 
 "map <F3> :Bgrep<cr>
 map <F3><F3> :Grep<cr><cr><cr>
 map <F3><F3><F3> :Rgrep<cr>
+map <leader><F3> :Rgrep<cr>
 
 "== quickfix shortcuts ==
 map <leader>1  :botright copen 20<cr>
@@ -698,8 +699,13 @@ let g:SrcExpl_nextDefKey = "<F8>"
 "map <F11> // reserve for max size windows
 map <F12> :NERDTreeFind<cr>
 map <F12><F12> :NERDTreeToggle<cr>
+" There are two plugins named "Vim-markdown" in github:
+" http://github.com/plasticboy/vim-markdown.git
+" http://github.com/gabrielelana/vim-markdown.git
+" :Toc is a command in the plasticboy's Vim-markdown plugin 
 "map <leader><F12> :Toc<cr>
 map <leader><F12> :Voom<cr>
+map <F12><F12><F12> :Mer<cr>
 
 "===== Load external vimrc in current dir =====
 if filereadable("vimrc")
@@ -731,4 +737,3 @@ aug toggleTagbar
   au BufEnter * :endif
   au BufEnter * :endif
 aug END 
-
