@@ -630,6 +630,12 @@ let g:ctrlp_lazy_update = 1
 let g:tagbar_left = 1
 let g:tagbar_sort = 0
 "let g:tagbar_autopreview = 1
+let g:tagbar_left = 1
+
+
+"====== var for VOom =====
+au BufNewFile,BufRead *.md :set filetype=markdown
+let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
 
 
 "==========================================
@@ -692,7 +698,8 @@ let g:SrcExpl_nextDefKey = "<F8>"
 "map <F11> // reserve for max size windows
 map <F12> :NERDTreeFind<cr>
 map <F12><F12> :NERDTreeToggle<cr>
-map <leader><F12> :Toc<cr>
+"map <leader><F12> :Toc<cr>
+map <leader><F12> :Voom<cr>
 
 "===== Load external vimrc in current dir =====
 if filereadable("vimrc")
@@ -724,3 +731,4 @@ aug toggleTagbar
   au BufEnter * :endif
   au BufEnter * :endif
 aug END 
+
