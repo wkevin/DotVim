@@ -95,6 +95,9 @@ def build_context(markdown):
     style = get_setting('VMEPstylesheet')
     if not path.isfile(style):
         style = path.join(base, 'stylesheets', style)
+    f = open(style, 'r')
+    style = f.read()
+    f.close()
     context = dict(
         name = name.replace('_', ' '),
         # content = markdown.convert(body),

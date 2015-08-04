@@ -730,10 +730,12 @@ aug END
 "au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
 aug toggleTagbar
   au BufEnter * :if getftype(bufname("%")) == "file"
-  au BufEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' 
+  au BufEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\|vim\)' 
   au BufEnter * :TagbarOpen
   au BufEnter * :else
   au BufEnter * :TagbarClose
   au BufEnter * :endif
   au BufEnter * :endif
 aug END 
+
+let g:VMEPstylesheet = 'beautiful.css' 
