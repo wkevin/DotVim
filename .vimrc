@@ -619,7 +619,7 @@ let g:SrcExpl_updateTagsCmd = "ctags --langmap=java:+.aidl --exclude='.repo' --e
 "let g:SrcExpl_nextDefKey = "<F8>" 
 
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:30,results:30'
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:500,results:500'
 let g:ctrlp_regexp = 1
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
@@ -684,10 +684,11 @@ map <F5><F5> :Tlist<cr>
 let g:script_runner_key = '<leader><F5>'
 
 map <F6> :tj 
+map <F6><F6> :tj <C-R>=expand("<cword>")<cr><cr>
 map <F7> :tp<cr>
 map <F8> :tn<cr>
 
-nmap <F6><F6> :SrcExplToggle<cr>
+nmap <F6><F6><F6> :SrcExplToggle<cr>
 let g:SrcExpl_updateTagsKey = "<leader><F6>"
 let g:SrcExpl_prevDefKey = "<F7>"
 let g:SrcExpl_nextDefKey = "<F8>"
@@ -729,13 +730,13 @@ aug END
 "au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |NERDTreeFind|endif
 "au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
 aug toggleTagbar
-  au BufEnter * :if getftype(bufname("%")) == "file"
-  au BufEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\|vim\)' 
-  au BufEnter * :TagbarOpen
-  au BufEnter * :else
-  au BufEnter * :TagbarClose
-  au BufEnter * :endif
-  au BufEnter * :endif
+  au BufWinEnter * :if getftype(bufname("%")) == "file"
+  au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c$\|cpp$\|java$\|make$\|vim$\)' 
+  au BufWinEnter * :TagbarOpen
+  au BufWinEnter * :else
+  au BufWinEnter * :TagbarClose
+  au BufWinEnter * :endif
+  au BufWinEnter * :endif
 aug END 
 
 let g:VMEPstylesheet = 'beautiful.css' 
