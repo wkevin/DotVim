@@ -620,7 +620,7 @@ let g:SrcExpl_updateTagsCmd = "ctags --langmap=java:+.aidl --exclude='.repo' --e
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:500,results:500'
-let g:ctrlp_regexp = 1
+let g:ctrlp_regexp = 0
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_lazy_update = 1
@@ -631,6 +631,7 @@ let g:tagbar_left = 1
 let g:tagbar_sort = 0
 "let g:tagbar_autopreview = 1
 let g:tagbar_left = 1
+let g:tagbar_width = 25
 
 
 "====== var for VOom =====
@@ -668,9 +669,9 @@ noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 
 
 "== Use Grep vim plugin ==
 "map <F3> :Bgrep<cr>
-map <F3><F3> :Grep<cr><cr><cr>
-map <F3><F3><F3> :Rgrep<cr>
-map <leader><F3> :Rgrep<cr>
+map <F3><F3> :Grep -I<cr><cr><cr>
+map <F3><F3><F3> :Rgrep -I<cr>
+map <leader><F3> :Rgrep -I<cr>
 
 "== quickfix shortcuts ==
 map <leader>1  :botright copen 20<cr>
