@@ -530,7 +530,6 @@ endtry
 """"""""""""""""""""""""""""""
 " => Vim grep
 """"""""""""""""""""""""""""""
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
 set grepprg=/bin/grep\ -nH
 
 
@@ -559,6 +558,7 @@ set guifont=Bitstream_Vera_Sans_Mono:h9:cANSI "记住空格用下划线代替哦
 set gfw=幼圆:h10:cGB2312
 
 "====== var for grep.vim =====
+let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated .git .deps'
 let Grep_Skip_Files = 'tags'
 "let Grep_Default_Filelist = '^tags'
 
@@ -631,7 +631,7 @@ let g:tagbar_left = 1
 let g:tagbar_sort = 0
 "let g:tagbar_autopreview = 1
 let g:tagbar_left = 1
-let g:tagbar_width = 25
+let g:tagbar_width = 30
 
 
 "====== var for VOom =====
@@ -741,3 +741,5 @@ aug toggleTagbar
 aug END 
 
 let g:VMEPstylesheet = 'beautiful.css' 
+let g:VMEPoutputdirectory = './'
+let g:markdown_enable_spell_checking = 0
