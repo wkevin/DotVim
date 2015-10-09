@@ -54,7 +54,7 @@ endif
 " {{{ OPTIONS
 
 setlocal textwidth=0
-setlocal ts=2 sw=2 expandtab smarttab
+setlocal ts=4 sw=4 expandtab smarttab
 setlocal comments=b:*,b:-,b:+,n:> commentstring=>\ %s
 setlocal formatoptions+=tcrqon formatoptions-=wa
 setlocal formatlistpat="^\s*\d\.\s\+"
