@@ -858,7 +858,7 @@ hi def Italic                       term=italic cterm=italic gui=italic
 hi def Bold                         term=bold cterm=bold gui=bold
 hi def BoldItalic                   term=bold,italic cterm=bold,italic gui=bold,italic
 
-hi def link markdownItalic                  Italic
+"hi def link markdownItalic                  Italic
 hi def link markdownBold                    Bold
 hi def link markdownBoldItalic              BoldItalic
 

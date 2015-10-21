@@ -578,7 +578,7 @@ let NERDTreeQuitOnOpen='1'
 "====== var for SrcExpl =====
 
 " // Set the height of Source Explorer window 
-let g:SrcExpl_winHeight = 60 
+let g:SrcExpl_winHeight = 80 
 
 " // Set 100 ms for refreshing the Source Explorer 
 let g:SrcExpl_refreshTime = 100 
@@ -618,19 +618,20 @@ let g:SrcExpl_updateTagsCmd = "ctags --langmap=java:+.aidl --exclude='.repo' --e
 " // Set "<F4>" key for displaying the next definition in the jump list 
 "let g:SrcExpl_nextDefKey = "<F8>" 
 
+"====== var for ctrlp =====
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:500,results:500'
 let g:ctrlp_regexp = 0
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_lazy_update = 1
+" :CtrlpClearCache can clear the cache
 
 
 "====== var for Tagbar =====
 let g:tagbar_left = 1
 let g:tagbar_sort = 0
 "let g:tagbar_autopreview = 1
-let g:tagbar_left = 1
 let g:tagbar_width = 30
 
 
@@ -638,6 +639,8 @@ let g:tagbar_width = 30
 au BufNewFile,BufRead *.md :set filetype=markdown
 let g:voom_ft_modes = {'markdown': 'markdown', 'tex': 'latex'}
 
+"====== var for Others =====
+set splitright
 
 "==========================================
 " Hot key configurationi
@@ -652,6 +655,7 @@ map <F4> :Bclose<cr>
 "===== Find file =====
 map f :CtrlP<CR>
 map F :CtrlP
+map <A-f> :CtrlPClearCache<CR>
 map <leader>f :FufFile<CR>
 map <leader>b :FufBuffer<CR>
 map <leader>d :FufDir<CR>
@@ -680,34 +684,46 @@ map <leader>3  :cnext<cr>
 map <leader>4  :cclose<cr>
 
 "===== Find symbal =====
+" in Tagbar
 map <F5> :TagbarToggle<cr>
 map <F5><F5> :Tlist<cr>
 let g:script_runner_key = '<leader><F5>'
-
+" in current window
 map <F6> :tj 
 map <F6><F6> :tj <C-R>=expand("<cword>")<cr><cr>
+map <leader>s :tj <C-R>=expand("<cword>")<cr><cr>
 map <F7> :tp<cr>
 map <F8> :tn<cr>
-
+" in preview window
+map s :vertical ptj <C-R>=expand("<cword>")<cr><cr>
+"au! CursorHold *.[ch] nested :exe "silent! ptag " . expand("<cword>")  //preview window will in bufflist,so auto will be very much buffers
+" in srcExpl window
 nmap <F6><F6><F6> :SrcExplToggle<cr>
 let g:SrcExpl_updateTagsKey = "<leader><F6>"
 let g:SrcExpl_prevDefKey = "<F7>"
 let g:SrcExpl_nextDefKey = "<F8>"
 
 
-"===== Other =====
-"map <F9>
-"map <F10>
-"map <F11> // reserve for max size windows
-map <F12> :NERDTreeFind<cr>
-map <F12><F12> :NERDTreeToggle<cr>
+"===== For markdown =====
 " There are two plugins named "Vim-markdown" in github:
-" http://github.com/plasticboy/vim-markdown.git
+" http://github.com/plasticboy/vim-markdown.git -- bad,do not use
 " http://github.com/gabrielelana/vim-markdown.git
+map <F9> :Mer<cr>
+map <F9><F9> :Me<cr>
+map <leader><F9> :VoomToggle<cr>
 " :Toc is a command in the plasticboy's Vim-markdown plugin 
 "map <leader><F12> :Toc<cr>
-map <leader><F12> :Voom<cr>
-map <F12><F12><F12> :Mer<cr>
+
+"===== For reserve =====
+"map <F10> // reserve for menu
+"map <F11> // reserve for max size windows
+
+"===== For NERDTree =====
+map <F12> :NERDTreeFind<cr>
+map <F12><F12> :NERDTreeToggle<cr>
+
+set pastetoggle=<leader><F12> 
+"set paste //this option can make <F2>... useless
 
 "===== Load external vimrc in current dir =====
 if filereadable("vimrc")
@@ -715,7 +731,7 @@ if filereadable("vimrc")
     source vimrc
 endif
 
-"close the quickfix window when leave it
+"close the quickfix window when close a window, and jump out from tagbar window
 aug QickfixAutoClose
   au!
   "au WinLeave * :if getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
@@ -727,12 +743,14 @@ aug QickfixAutoClose
   au WinLeave * :endif
 aug END
 
+au BufWinEnter *.md :VoomToggle
+au BufWinLeave *.md :Voomquit
 
 "au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |NERDTreeFind|endif
 "au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
 aug toggleTagbar
   au BufWinEnter * :if getftype(bufname("%")) == "file"
-  au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c$\|cpp$\|java$\|make$\|vim$\)' 
+  au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c$\|cpp$\|java$\|make$\|vim$\|python\)' 
   au BufWinEnter * :TagbarOpen
   au BufWinEnter * :else
   au BufWinEnter * :TagbarClose
@@ -742,4 +760,6 @@ aug END
 
 let g:VMEPstylesheet = 'beautiful.css' 
 let g:VMEPoutputdirectory = './'
+au BufWinEnter *.md let b:VMEPoutputdirectory = expand('%:p:h')
 let g:markdown_enable_spell_checking = 0
+
