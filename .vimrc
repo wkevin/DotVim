@@ -674,7 +674,7 @@ noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 
 "== Use Grep vim plugin ==
 "map <F3> :Bgrep<cr>
 map <F3><F3> :Grep -I<cr><cr><cr>
-map <F3><F3><F3> :Rgrep -I<cr>
+map <F3><F3><F3> :GrepBuffer -I<cr><cr><cr>
 map <leader><F3> :Rgrep -I<cr>
 
 "== quickfix shortcuts ==
@@ -763,3 +763,11 @@ let g:VMEPoutputdirectory = './'
 au BufWinEnter *.md let b:VMEPoutputdirectory = expand('%:p:h')
 let g:markdown_enable_spell_checking = 0
 
+au VimLeave * mks! .vim.session
+
+"当直接用vi不加文件名打开时，加载已有的session
+if expand("%")==""
+    if(expand("./.vim.session")==findfile("./.vim.session"))
+         silent :source .vim.session
+    endif
+endif
