@@ -721,6 +721,7 @@ map <leader><F9> :VoomToggle<cr>
 "===== For NERDTree =====
 map <F12> :NERDTreeFind<cr>
 map <F12><F12> :NERDTreeToggle<cr>
+map <leader><F12> :!dot "%" -Txlib<cr>
 
 set pastetoggle=<leader><F12> 
 "set paste //this option can make <F2>... useless
@@ -743,6 +744,7 @@ aug QickfixAutoClose
   au WinLeave * :endif
 aug END
 
+" 左侧边栏：符号表等
 au BufWinEnter *.md :VoomToggle
 au BufWinLeave *.md :Voomquit
 
@@ -758,12 +760,18 @@ aug toggleTagbar
   au BufWinEnter * :endif
 aug END 
 
+" markdown文件的高亮
 let g:VMEPstylesheet = 'beautiful.css' 
 let g:VMEPoutputdirectory = './'
 au BufWinEnter *.md let b:VMEPoutputdirectory = expand('%:p:h')
 let g:markdown_enable_spell_checking = 0
 
-au VimLeave * mks! .vim.session
+" 保存会话
+aug savesession
+au VimLeave * :if bufname("%") != '.git/COMMIT_EDITMSG'
+au VimLeave * :mks! .vim.session
+au VimLeave * :endif
+aug END
 
 "当直接用vi不加文件名打开时，加载已有的session
 if expand("%")==""
