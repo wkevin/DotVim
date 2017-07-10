@@ -651,17 +651,41 @@ nmap <F2> :update<cr>
 imap <F2> <Esc><Esc>:update<cr>
 map <F4> :Bclose<cr>
 
-
 "===== Find file =====
 map f :CtrlP<CR>
 map F :CtrlP
 map <A-f> :CtrlPClearCache<CR>
+
+"=== FufFile ===
 map <leader>f :FufFile<CR>
 map <leader>b :FufBuffer<CR>
 map <leader>d :FufDir<CR>
 "map <leader>c :FufMruCmd<CR>
 map <leader>j :FufJumpList<CR>
-map <leader><leader> :BufExplorerHorizontalSplit<CR>
+
+"=== BufExplorer ===
+"vim有个自有命令 :ls 或 :buffers ，能够列出所有buffer
+"并且每个buffer有一个状态（状态符号的定义在 :help buffers 中可以查到
+"a:activity  h:hide  ' ':noactivity
+"%:buffer正在当前窗口中   #:buffer为前一个窗口（可以用 Ctrl-^）切换过去
+"
+"<leader>be == :BufExplorer                 //在当前窗口撑满显示buffer列表
+"<leader>bt == :ToggleBufExplorer           //在当前窗口撑满显示或关闭buffer列表
+"<leader>bs == :BufExplorerHorizontalSplit  //在上方split一个新窗口显示buffer列表
+"<leader>bv == :BufExplorerVerticalSplit    //在右边split一个新窗口显示buffer列表
+map <leader><leader> :BufExplorer<CR>
+"在buffer列表中的操作有：
+"<enter>：当前窗口打开      —— 时而当前窗口、时而新建窗口（令人苦恼）
+"<shift-enter>：新建tab打开 —— 时而当前窗口、时而新建窗口，没见到新建tab
+"o：当前窗口打开            —— 时而当前窗口、时而新建窗口
+"上面的3种打开方式存在一个问题：
+"    a/h状态(即：已经加载到内存）的buffer，打开会在原window
+"    ' '状态（即：未加载到内存）的buffer，打开会在原window(:BufExplorer）或新建window(:BufExplorerxxxSplit)
+"t：新建一个tab page来显示
+"q：quit
+"d：delete
+"r：排序
+"R：显示绝对路径
 
 "===== Find string =====
 "== Use vimgrep == can not dont ignore case
@@ -672,6 +696,9 @@ noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 
 "map <F3><F3> :grep -wR --include=*.h --include=*.c  --include=*mak* --include=*.java --exclude-dir=.git --exclude=.svn
 
 "== Use Grep vim plugin ==
+let Grep_Default_Filelist = '*.h *.c *.cpp *.asm *.txt *.md'
+let Grep_Skip_Dirs = '*.bak *~ *.git *.svn'
+let Grep_Skip_Files = '*.html'
 "map <F3> :Bgrep<cr>
 map <F3><F3> :Grep -I<cr><cr><cr>
 map <F3><F3><F3> :GrepBuffer -I<cr><cr><cr>
@@ -682,6 +709,7 @@ map <leader>1  :botright copen 20<cr>
 map <leader>2  :cprev<cr>
 map <leader>3  :cnext<cr>
 map <leader>4  :cclose<cr>
+map <leader>5  :botright copen 20<cr>
 
 "===== Find symbal =====
 " in Tagbar
@@ -744,27 +772,27 @@ aug QickfixAutoClose
   au WinLeave * :endif
 aug END
 
-" 左侧边栏：符号表等
-au BufWinEnter *.md :VoomToggle
-au BufWinLeave *.md :Voomquit
-
-"au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |NERDTreeFind|endif
-"au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
-aug toggleTagbar
-  au BufWinEnter * :if getftype(bufname("%")) == "file"
-  au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c$\|cpp$\|java$\|make$\|vim$\|python\)' 
-  au BufWinEnter * :TagbarOpen
-  au BufWinEnter * :else
-  au BufWinEnter * :TagbarClose
-  au BufWinEnter * :endif
-  au BufWinEnter * :endif
-aug END 
-
 " markdown文件的高亮
 let g:VMEPstylesheet = 'beautiful.css' 
 let g:VMEPoutputdirectory = './'
 au BufWinEnter *.md let b:VMEPoutputdirectory = expand('%:p:h')
 let g:markdown_enable_spell_checking = 0
+
+" 左侧边栏：符号表等
+"au BufWinEnter *.md :VoomToggle
+"au BufWinLeave *.md :Voomquit
+
+"au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |NERDTreeFind|endif
+"au BufWinEnter * nested :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c\|cpp\|java\|make\)' |TagbarOpen|endif
+"aug toggleTagbar
+"  au BufWinEnter * :if getftype(bufname("%")) == "file"
+"  au BufWinEnter * :if getbufvar(winbufnr(winnr()),"current_syntax") =~ '\(c$\|cpp$\|java$\|make$\|vim$\|python\)' 
+"  au BufWinEnter * :TagbarOpen
+"  au BufWinEnter * :else
+"  au BufWinEnter * :TagbarClose
+"  au BufWinEnter * :endif
+"  au BufWinEnter * :endif
+"aug END 
 
 " 保存会话
 aug savesession
@@ -779,3 +807,5 @@ if expand("%")==""
          silent :source .vim.session
     endif
 endif
+
+set statusline=[%F]%=[Line:%l/%L:%c][%p%%] 
