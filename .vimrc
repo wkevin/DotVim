@@ -741,7 +741,8 @@ map <leader><F9> :VoomToggle<cr>
 "===== For NERDTree =====
 map <F12> :NERDTreeFind<cr>
 map <F12><F12> :NERDTreeToggle<cr>
-map <leader><F12> :!dot "%" -Txlib<cr>
+"map <leader><F12> :!dot "%" -Txlib<cr>
+map <leader><F12> :!callgraph -f <C-R>=expand("<cword>") -d %:p:h
 
 set pastetoggle=<leader><F12> 
 "set paste //this option can make <F2>... useless
