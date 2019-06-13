@@ -558,9 +558,6 @@ set guifont=Bitstream_Vera_Sans_Mono:h9:cANSI "记住空格用下划线代替哦
 set gfw=幼圆:h10:cGB2312
 
 "====== var for grep.vim =====
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated .git .deps'
-let Grep_Skip_Files = 'tags'
-"let Grep_Default_Filelist = '^tags'
 
 "====== var for TagList =====
 let Tlist_Show_One_File=1
@@ -578,7 +575,7 @@ let NERDTreeQuitOnOpen='1'
 "====== var for SrcExpl =====
 
 " // Set the height of Source Explorer window 
-let g:SrcExpl_winHeight = 80 
+let g:SrcExpl_winHeight = 10 
 
 " // Set 100 ms for refreshing the Source Explorer 
 let g:SrcExpl_refreshTime = 100 
@@ -697,19 +694,16 @@ noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 
 
 "== Use Grep vim plugin ==
 let Grep_Default_Filelist = '*.h *.c *.cpp *.asm *.txt *.md'
-let Grep_Skip_Dirs = '*.bak *~ *.git *.svn'
-let Grep_Skip_Files = '*.html'
-"map <F3> :Bgrep<cr>
-map <F3><F3> :Grep -I<cr><cr><cr>
-map <F3><F3><F3> :GrepBuffer -I<cr><cr><cr>
-map <leader><F3> :Rgrep -I<cr>
+let Grep_Skip_Dirs = '*.bak *~ *.git *.svn .deps'
+let Grep_Skip_Files = 'tags *.html'
+map <F3> :Bgrep -i<cr>
+map <F3><F3> :Rgrep -i<cr>
 
 "== quickfix shortcuts ==
 map <leader>1  :botright copen 20<cr>
 map <leader>2  :cprev<cr>
 map <leader>3  :cnext<cr>
 map <leader>4  :cclose<cr>
-map <leader>5  :botright copen 20<cr>
 
 "===== Find symbal =====
 " in Tagbar
@@ -717,16 +711,14 @@ map <F5> :TagbarToggle<cr>
 map <F5><F5> :Tlist<cr>
 let g:script_runner_key = '<leader><F5>'
 " in current window
-map <F6> :tj 
-map <F6><F6> :tj <C-R>=expand("<cword>")<cr><cr>
-map <leader>s :tj <C-R>=expand("<cword>")<cr><cr>
+map <F6> :tj <C-R>=expand("<cword>")<cr><cr>
 map <F7> :tp<cr>
 map <F8> :tn<cr>
 " in preview window
 map s :vertical ptj <C-R>=expand("<cword>")<cr><cr>
 "au! CursorHold *.[ch] nested :exe "silent! ptag " . expand("<cword>")  //preview window will in bufflist,so auto will be very much buffers
 " in srcExpl window
-nmap <F6><F6><F6> :SrcExplToggle<cr>
+nmap <F6><F6> :SrcExplToggle<cr>
 let g:SrcExpl_updateTagsKey = "<leader><F6>"
 let g:SrcExpl_prevDefKey = "<F7>"
 let g:SrcExpl_nextDefKey = "<F8>"
@@ -838,11 +830,12 @@ Plugin 'CRefVim'
 Plugin 'FuzzyFinder'
 Plugin 'genutils' " for vi script develpoer
 Plugin 'lookupfile' " :LookupFile :LUPath :LUBufs :LUWalk :LUArgs
-Plugin 'python'
 Plugin 'snipMate'
+Plugin 'grep.vim' " :Grep|:Rgrep :Bgrep :[F|Rf]grep :[E|Re]grep :[A|Ra]grep
 
 " 2) plugin from GitHub
 Plugin 'tpope/vim-fugitive' " better than 'WolfgangMehner/git-support'
+Plugin 'junegunn/gv.vim'
 Plugin 'scrooloose/nerdtree' " newer than 'vim-scripts/The-NERD-tree'
 Plugin 'craigemery/vim-autotag' " newer than 'vim-scripts/AutoTag' 1.search ctags file up and down 2.del entries and ctags -a
                                 " better than 'vim-scripts/ctags.vim' " :GenerateTags :GetTagName 
