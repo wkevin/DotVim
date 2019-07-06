@@ -894,3 +894,15 @@ filetype plugin indent on    " required
 "filetype plugin on
 "=========== vundle end ===============
 
+"auto load .vimrc in current path
+set exrc
+
+" Other tips
+":echo @% def/my.txt directory/name of file (relative to the current working directory of /abc)
+":echo expand('%:t') my.txt name of file ('tail')
+":echo expand('%:p') /abc/def/my.txt full path
+":echo expand('%:p:h') /abc/def directory containing file ('head')
+":echo expand('%:p:h:t') def First get the full path with :p (/abc/def/my.txt), then get the head of that with :h (/abc/def), then get the tail of that with :t (def)
+":echo expand('%:r') def/my name of file less one extension ('root')
+":echo expand('%:e') txt name of file's extension ('extension')
+"echo expand('%:p:h')
