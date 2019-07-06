@@ -694,7 +694,7 @@ map <leader><leader> :BufExplorer<CR>
 
 "===== Find string =====
 "== Use vimgrep == can not dont ignore case
-noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 20<cr>
+noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 12<cr>
 
 "== Use /bin/grep == faster, but always jump to the first result
 "map <F3> :grep <cword> %:p <cr> :copen 20<cr>
@@ -704,11 +704,13 @@ noremap <F3> :vimgrep /<C-R>=expand("<cword>")<CR>/j %:p<CR> \| :botright copen 
 let Grep_Default_Filelist = '*.h *.c *.cpp *.asm *.txt *.md'
 let Grep_Skip_Dirs = '*.bak *~ *.git *.svn .deps'
 let Grep_Skip_Files = 'tags *.html'
-map <F3> :Bgrep -i<cr>
-map <F3><F3> :Rgrep -i<cr>
+"map <F3> :Bgrep -i<cr> " use *(highlight)
+map <F3> :Rfgrep <cr>
+map <F3><F3> :Rgrep <cr>
+
 
 "== quickfix shortcuts ==
-map <leader>1  :botright copen 20<cr>
+map <leader>1  :botright copen 12<cr>
 map <leader>2  :cprev<cr>
 map <leader>3  :cnext<cr>
 map <leader>4  :cclose<cr>
@@ -853,6 +855,8 @@ Plugin 'genutils' " for vi script develpoer
 Plugin 'lookupfile' " :LookupFile :LUPath :LUBufs :LUWalk :LUArgs
 Plugin 'snipMate'
 Plugin 'grep.vim' " :Grep|:Rgrep :Bgrep :[F|Rf]grep :[E|Re]grep :[A|Ra]grep
+Plugin 'autocomp.vim'
+Plugin 'OmniCppComplete'
 
 " 2) plugin from GitHub
 Plugin 'tpope/vim-fugitive' " better than 'WolfgangMehner/git-support'
