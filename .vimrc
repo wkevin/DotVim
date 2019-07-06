@@ -553,9 +553,12 @@ set nowrap
 " 编码
 set fileencodings=utf8,gbk "打开、编辑、保存“已有文件”时的可用编码集，创建文件使用encoding
 set termencoding= "默认空值，输出到终端不进行编码转换。
-" 字体
-set guifont=Bitstream_Vera_Sans_Mono:h9:cANSI "记住空格用下划线代替哦
-set gfw=幼圆:h10:cGB2312
+" 字体  记住空格用下划线代替哦
+" in terminal: use terminal fonts setting
+" in gui(windows):use guifont[xxx] setting
+"set guifont=Bitstream_Vera_Sans_Mono:h9:cANSI
+set guifont=Source_Han_Sans_HW_SC:h10:cGB2312
+set guifontwide=幼圆:h10:cGB2312
 
 "====== var for grep.vim =====
 
@@ -604,7 +607,8 @@ let g:SrcExpl_isUpdateTags = 0
 
 " // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to 
 " // create/update the tags file 
-let g:SrcExpl_updateTagsCmd = "ctags --langmap=java:+.aidl --exclude='.repo' --exclude='.git' --exclude='*.html' --sort=foldcase -R ." 
+" let g:SrcExpl_updateTagsCmd = "ctags --exclude='.repo' --exclude='.git' --exclude='*.html' --sort=foldcase -R ." 
+let g:SrcExpl_updateTagsCmd = "ctags --exclude='.git' -R --language=c++ --c++-kinds=+px ." 
 
 " // Set "<F12>" key for updating the tags file artificially 
 "let g:SrcExpl_updateTagsKey = "<leader><F10>" 
@@ -622,6 +626,10 @@ let g:ctrlp_regexp = 0
 let g:ctrlp_max_files = 100000
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_lazy_update = 1
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  'build',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 " :CtrlpClearCache can clear the cache
 
 
@@ -705,24 +713,36 @@ map <leader>2  :cprev<cr>
 map <leader>3  :cnext<cr>
 map <leader>4  :cclose<cr>
 
-"===== Find symbal =====
-" in Tagbar
-map <F5> :TagbarToggle<cr>
-map <F5><F5> :Tlist<cr>
-let g:script_runner_key = '<leader><F5>'
-" in current window
-map <F6> :tj <C-R>=expand("<cword>")<cr><cr>
-map <F7> :tp<cr>
-map <F8> :tn<cr>
-" in preview window
-map s :vertical ptj <C-R>=expand("<cword>")<cr><cr>
-"au! CursorHold *.[ch] nested :exe "silent! ptag " . expand("<cword>")  //preview window will in bufflist,so auto will be very much buffers
-" in srcExpl window
-nmap <F6><F6> :SrcExplToggle<cr>
+"===== Symbol =====
+
+"=== Symbol Make
 let g:SrcExpl_updateTagsKey = "<leader><F6>"
 let g:SrcExpl_prevDefKey = "<F7>"
 let g:SrcExpl_nextDefKey = "<F8>"
+map <leader><F7> :!ctags --exclude='.git' -R --language=c++ --c++-kinds=+px . <cr><cr>
+map <leader><F8> :!cscope -Rb $(find `pwd` -iregex '.+\.[chp]+')
+cs add cscope.out
 
+"=== Symbol View
+" in left sidebar
+map <F5> :TagbarToggle<cr>
+map <F5><F5> :Tlist<cr>
+let g:script_runner_key = '<leader><F5>'
+" in preview window
+map s :vertical ptj <C-R>=expand("<cword>")<cr><cr>
+" in srcExpl window
+nmap <leader><F5> :SrcExplToggle<cr>
+
+"=== Symbol Find
+"map <F6> :tj <C-R>=expand("<cword>")<cr><cr>
+" cscope is best symbol finder
+" :cs find [s|g|d|c|t|e] -- [appear|define|called-by-this|calling-this|string|faster-egrep]
+map <F6>         :cs find c <C-R>=expand("<cword>") <cr><cr>
+map <F6><F6>     :cs find e <C-R>=expand("<cword>") <cr><cr>
+map <leader><F6> :cs find d <C-R>=expand("<cword>") <cr>
+" :tp :tn can use same shortkey with SrcExpl_prev|nextDefKey
+map <F7> :tp<cr>
+map <F8> :tn<cr>
 
 "===== For markdown =====
 " There are two plugins named "Vim-markdown" in github:
@@ -869,3 +889,4 @@ filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "=========== vundle end ===============
+
